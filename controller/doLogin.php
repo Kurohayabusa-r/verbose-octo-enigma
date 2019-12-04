@@ -1,45 +1,58 @@
-<?php 
+<?php
 
 session_start();
 session_unset();
 
 session_regenerate_id(true);
+
 include "../database/db.php";
 
-if( $_SERVER["REQUEST_METHOD"] == "POST" ){
+    if($_SERVER["REQUEST_METHOD"] == "POST")
+    {
+        $username = $_POST["txtUsername"];
+        $password = $_POST["txtPassword"];
 
-    $username = $_POST["txtUsername"];
-    $password = $_POST["txtPassword"];
-    $shaPassword = sha1($password);
+        if($username == "")
+        {
+            $_SESSION["error"] = "Username must be filled";
+        }
+        else if($password == "")
+        {
+            $_SESSION["error"] = "Password must be filled";
+        }
 
-    if( $username == "" ){
-        $_SESSION["error"] = "Username must be filled";
-    }else if( $password == "" ){
-        $_SESSION["error"] = "Wrong username or password";
-    }
+        $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
 
-    $query = "SELECT * FROM users WHERE username = '$username'";
-    $res  = $conn->query($query);
+        $res = $stmt->get_result();
 
-    if( $res && !isset($_SESSION["error"]) ){
-        $row = $res->fetch_assoc();
-        
-        if( $shaPassword == $row["password"] ) {
-            $_SESSION["username"] = $username;
+        if( $res && !isset($_SESSION["error"]) )
+        {
+            $row = $res->fetch_assoc();
 
-            if( isset($_POST["chkRemember"]) ){
-                setcookie("cookieusername",$username,time() + 60 * 60, "/" );
-                setcookie("cookiepassword",$password,time() + 60 * 60, "/" );
+            if( password_verify($password, $row["password"]) )
+            {
+                $_SESSION["username"] = $username;
+
+                if( isset($_POST["chkRemember"]) )
+                {
+                    setcookie("cookieUsername",$username,time()+60*60,"/");
+                    setcookie("cookiePassword",$password,time()+60*60,"/");
+                }
+                header("Location: ../index.php");
             }
-
-            header("Location: ../index.php");
-        }else{
-            $_SESSION["error"] = "User Not Found!";
+            else{
+                $_SESSION["error"] = "User not found";
+                header("Location: ../login.php");
+            }
+        }
+        else{
             header("Location: ../login.php");
         }
-    }else{
-        header("Location: ../login.php");
+        $stmt->free_result();
+        $stmt->close();
     }
-}
+
 
 ?>

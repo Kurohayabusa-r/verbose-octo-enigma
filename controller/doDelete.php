@@ -1,16 +1,23 @@
 <?php
 
-include '../database/db.php';
+include "../database/db.php";
 
 $id = $_GET['id'];
 
-$query = "DELETE FROM handphone WHERE id = '$id'";
-$res = $conn->query($query);
+$stmt = $conn->prepare("DELETE FROM handphone WHERE id = ?");
+$stmt->bind_param("i", $id);
+//$stmt->execute();
 
-if( $res ){
+//$query = "DELETE FROM handphone WHERE id = '$id'";
+//$res = $conn->query($query);
+$res = $stmt->execute();
+if($res)
+{
+    $stmt->close();
     header("Location: ../index.php");
 }else{
-    die("Delete failed!");
+    $stmt->close();
+    die("Delete failed");
 }
 
 ?>
