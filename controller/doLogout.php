@@ -3,10 +3,11 @@
 session_start();
 session_unset();
 
-setcookie("cookieusername",$_COOKIE["cookieusername"],time() - 60 * 60, "/" );
-setcookie("cookiepassword",$_COOKIE["cookiepassword"],time() - 60 * 60, "/" );
+setcookie("cookieUsername",$_COOKIE["username"],time() - 3600, "/");
+setcookie("cookiePassword",$_COOKIE["password"],time() - 3600, "/");
 
-if( !isset($_SESSION["username"]) ){
+if( !isset($_SESSION["username"]) )
+{
     header("Location: ../login.php");
 }
 

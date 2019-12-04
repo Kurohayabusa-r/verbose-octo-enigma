@@ -6,7 +6,7 @@ include "../database/db.php";
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
     $id = $_POST["id"];
-    $brand = $_POST["brand"];
+    $breed = $_POST["breed"];
     $type = $_POST["type"];
     $price = $_POST["price"];
 
@@ -37,8 +37,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     {
         if( !isset($_SESSION["error"]) )
         {
-            $stmt = $conn->prepare("UPDATE handphone SET type = ?, brand = ?, price = ?, image = ? WHERE id = ?");
-            $stmt->bind_param("ssisi", $type, $brand, $price, $image_name, $id);
+            $stmt = $conn->prepare("UPDATE pets SET type = ?, breed = ?, price = ?, image = ? WHERE id = ?");
+            $stmt->bind_param("ssisi", $type, $breed, $price, $image_name, $id);
             //$stmt->execute();
             $res = $stmt->execute();
             //$query = "UPDATE handphone SET type = '$type', brand = '$type', price = '$price', image = '$image_name' WHERE id = '$id'";

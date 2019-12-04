@@ -7,8 +7,8 @@ include "../database/db.php";
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
     $id = $_POST["id"];
-    $brand = $_POST["brand"];
     $type = $_POST["type"];
+    $breed = $_POST["breed"];
     $price = $_POST["price"];
 
     $image = $_FILES["image"];
@@ -38,8 +38,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     {
         if( !isset($_SESSION["error"]) )
         {
-            $stmt = $conn->prepare("INSERT INTO handphone(type,brand,price,image) VALUES(?,?,?,?)");
-            $stmt->bind_param("ssis", $type, $brand, $price, $image_name);
+            $stmt = $conn->prepare("INSERT INTO pets(type,breed,price,image) VALUES(?,?,?,?)");
+            $stmt->bind_param("ssis", $type, $breed, $price, $image_name);
             //$stmt->execute();
             //$query = "INSERT INTO handphone(type,brand,price,image) VALUES('$type','$brand','$price','$image_name')";
             //$res = $conn->query($query);
