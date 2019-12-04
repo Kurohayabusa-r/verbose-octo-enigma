@@ -17,7 +17,7 @@
     <!-- View After Login -->
     <?php
       include "./database/db.php";
-      $query = "SELECT * FROM handphone";
+      $query = "SELECT * FROM pets";
       $res = $conn->query($query);
       if( isset($_SESSION["username"]) ) {
     ?>
@@ -27,15 +27,15 @@
   <!-- Show All Products and Searching -->
   <?php while($row = $res->fetch_assoc()) {?>
     <div class="col-sm-4 distance">
-      <p><b> <?php echo $row["brand"]; ?> </b></p> <!-- Show smartphone brand from database -->
+      <p><b> <?php echo $row["type"]; ?> </b></p> <!-- Show smartphone brand from database -->
       <!-- Image from path public/image/product/{image} -->
       <center>
         <img src="./public/image/product/<?php echo $row["image"]; ?>" class="img-responsive" alt="Image"> <!-- {image} = image from database -->
       </center>
-      <p><?php echo $row["type"]; ?></p> <!-- Show smartphone type from database -->
+      <p><?php echo $row["breed"]; ?></p> <!-- Show smartphone type from database -->
       <p>Rp <?php echo $row["price"]; ?></p> <!-- Show smartphone price from database -->
       <?php if($_SESSION["username"] != "admin") {?>
-      <a class="btn btn-warning" href="./purchase.php?id=<?php echo $row["id"]; ?>">Purchase</a>
+      <a class="btn btn-warning" href="./checkout.php?id=<?php echo $row["id"]; ?>">Purchase</a>
       <?php }?>
       <!-- Show Button Update and Delete -->
       <?php if($_SESSION["username"] == "admin") {?>

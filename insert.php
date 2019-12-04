@@ -49,17 +49,17 @@
 			<form class="form-horizontal" method="POST" action="./controller/doInsert.php" enctype="multipart/form-data">
 			<input type="hidden" name="id"> <!-- id from selected product -->
             <div class="form-group">
-              <label class="control-label col-sm-2" for="brand">Brand:</label>
+              <label class="control-label col-sm-2" for="type">Type:</label>
               <div class="col-sm-10">
                 <!-- Show selected brand in value input type -->
-                <input type="text" class="form-control" id="brand" name="brand" placeholder="Enter Brand">
+                <input type="text" class="form-control" id="type" name="type" placeholder="Enter Type">
               </div>
             </div>
             <div class="form-group">
-              <label class="control-label col-sm-2" for="type">Type:</label>
+              <label class="control-label col-sm-2" for="breed">Breed:</label>
               <div class="col-sm-10">
 				<!-- Show selected type in value input type -->
-                <input type="text" class="form-control" id="type" name="type" placeholder="Enter Type">
+                <input type="text" class="form-control" id="breed" name="breed" placeholder="Enter Breed">
               </div>
             </div>
             <div class="form-group">
