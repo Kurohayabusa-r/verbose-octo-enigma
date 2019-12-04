@@ -7,16 +7,17 @@ session_start();
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Login</title>
+	<title>Register</title>
 	<?php include_once 'helper/template/include.php'; ?>
 </head>
 <body>
 	<?php include_once 'helper/template/header.php'; ?>
 	
 	<!-- If user has logged in, Redirect to index.php -->
-	<?php 
-	if( isset($_SESSION["username"]) ){
-    	header("Location: ./index.php");
+	<?php
+	if( isset($_SESSION["username"]) )
+	{
+		header("Location: ./index.php");
 	}
 	?>
 	<div class="container text-center login">
@@ -33,19 +34,19 @@ session_start();
 	            <div class="errorMessage">
 					<!-- Show Error Message -->
 					<?php if( isset($_SESSION["error"]) ){ ?>
-					<p style="color: red;"> <?php 
-						if( isset($_SESSION["error"]) ){
-							echo $_SESSION["error"];
-						}
-						unset($_SESSION["error"]);
-					 ?> </p>
-					 <?php }else{?>
-						<p style="color: green;"> <?php 
-						if( isset($_SESSION["success"]) ){
-							echo $_SESSION["success"];
-						}
-						unset($_SESSION["error"]);
-					 ?> </p>
+						<p style="color: red;"> <?php 
+							if( isset($_SESSION["error"]) ){
+								echo $_SESSION["error"];
+							}
+							unset($_SESSION["error"]);
+					 	?> </p>
+					 	<?php }else{?>
+							<p style="color: green;"> <?php 
+							if( isset($_SESSION["success"]) ){
+								echo $_SESSION["success"];
+							}
+							unset($_SESSION["success"]);
+					 	?> </p>
 					 <?php }?>
 				</div>
 	        </div>

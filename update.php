@@ -1,7 +1,8 @@
 <!-- Form Update & Check Session -->
-<?php 
+<?php
   session_start();
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,12 @@
 	<?php include_once 'helper/template/header.php'; ?>
 	
 	<!-- If user has not logged in, Redirect to login.php -->
-  <?php include_once './helper/template/redirect.php' ?>
+  <?php
+    if( !isset($_SESSION["username"]) )
+    {
+      header("Location: ./login.php");
+    }
+  ?>
   
     <div class="title">
         <center>
@@ -23,24 +29,32 @@
       
 			<div class="errorMessage">
 				<!-- Show Error Message -->
-					<p style="color: red;"> <?php 
-						if( isset($_SESSION["error"]) ){
-							echo $_SESSION["error"];
-						}
-					 ?> </p>
+					<p style="color: red;"> 
+            <?php
+              if( isset($_SESSION["error"]) )
+              {
+                echo $_SESSION["error"];
+              }
+              unset($_SESSION["error"]);
+            ?>
+          </p>
 			</div>
       <form class="form-horizontal" method="POST" action="./controller/doUpdate.php" enctype="multipart/form-data">
-      <?php 
-        include_once("database/db.php");
-        $id = $_GET["id"];
+      <?php
+        include "./database/db.php";
+        $id = $_GET['id'];
+        $stmt = $conn->prepare("SELECT * FROM handphone WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        //$query = "SELECT * FROM handphone WHERE id = '$id'";
+        //$res = $conn->query($query);
 
-        $query = "SELECT * FROM handphone WHERE id = '$id'";
-        $res = $conn->query($query);
-        
-        if( $res ){
+        if($res)
+        {
           $row = $res->fetch_assoc();
       ?>
-			<input type="hidden" name="id" value=<?php echo $row["id"]; ?>> <!-- id from selected product -->
+			<input type="hidden" name="id" value=<?php echo $row['id']; ?>> <!-- id from selected product -->
             <div class="form-group">
               <label class="control-label col-sm-2" for="brand">Brand:</label>
               <div class="col-sm-10">
@@ -71,7 +85,10 @@
             <div class="modal-footer">
               <button type="submit" class="btn btn-default">Submit</button></button>
             </div>
-        <?php }?>
+        <?php } 
+        $stmt->free_result();
+        $stmt->close();
+        ?>
           </form>
 		</div>
 </body>

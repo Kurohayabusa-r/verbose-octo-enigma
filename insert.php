@@ -1,5 +1,5 @@
 <!-- Form Update & Check Session -->
-<?php session_start(); ?> 
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,8 +10,12 @@
 	<?php include_once 'helper/template/header.php'; ?>
 	
 	<!-- If user has not logged in, Redirect to login.php -->
-  <?php include_once './helper/template/redirect.php' ?>
-  
+  <?php
+    if( !isset($_SESSION["username"]) )
+    {
+      header("Location: ./login.php");
+    }
+  ?>
     <div class="title">
         <center>
           <h3>Insert</h3>
@@ -21,21 +25,26 @@
       
 			<div class="errorMessage">
 				<!-- Show Error Message -->
-				<?php if( isset($_SESSION["error"]) ){ ?>
-					<p style="color: red;"> <?php 
-						if( isset($_SESSION["error"]) ){
-							echo $_SESSION["error"];
-						}
-						unset($_SESSION["error"]);
-					 ?> </p>
-					 <?php }else{?>
-						<p style="color: green;"> <?php 
-						if( isset($_SESSION["success"]) ){
-							echo $_SESSION["success"];
-						}
-						unset($_SESSION["success"]);
-					 ?> </p>
-					 <?php }?>
+        <?php if( isset($_SESSION["error"]) ){ ?>
+					<p style="color: red;">
+            <?php
+              if( isset($_SESSION["error"]) )
+              {
+                echo $_SESSION["error"];
+              }
+              unset($_SESSION["error"]);
+            ?>
+          </p>
+          <?php
+          }else{ ?>
+          <p style="color: green;"> <?php
+            if( isset($_SESSION["success"]) )
+            {
+              echo $_SESSION["success"];
+            }
+            unset($_SESSION["success"]);
+          }
+          ?> </p>
 			</div>
 			<form class="form-horizontal" method="POST" action="./controller/doInsert.php" enctype="multipart/form-data">
 			<input type="hidden" name="id"> <!-- id from selected product -->
