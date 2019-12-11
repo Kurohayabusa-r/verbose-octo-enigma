@@ -1,6 +1,7 @@
 <!-- Form Update & Check Session -->
 <?php
   session_start();
+  require_once __DIR__ . 'csrf.php';
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +55,7 @@
         {
           $row = $res->fetch_assoc();
       ?>
+      <input type="hidden" name="_csrf" value="<?= $csrfToken ?>"> <!-- csrf token check -->      
 			<input type="hidden" name="id" value=<?php echo $row['id']; ?>> <!-- id from selected product -->
             <div class="form-group">
               <label class="control-label col-sm-2" for="type">Type:</label>

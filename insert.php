@@ -1,5 +1,9 @@
 <!-- Form Update & Check Session -->
-<?php session_start(); ?>
+<?php
+  session_start(); 
+  require_once __DIR__ . 'csrf.php';
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,6 +51,7 @@
           ?> </p>
 			</div>
 			<form class="form-horizontal" method="POST" action="./controller/doInsert.php" enctype="multipart/form-data">
+      <input type="hidden" name="_csrf" value="<?= $csrfToken ?>"> <!-- csrf token check -->
 			<input type="hidden" name="id"> <!-- id from selected product -->
             <div class="form-group">
               <label class="control-label col-sm-2" for="type">Type:</label>

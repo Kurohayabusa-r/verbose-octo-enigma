@@ -1,6 +1,7 @@
 <!-- Form Update & Check Session -->
 <?php
   session_start();
+  require_once __DIR__ . 'csrf.php';
 ?>
 
 <!DOCTYPE html>
@@ -81,6 +82,7 @@
         {
           $row = $res->fetch_assoc();
       ?>
+      <input type="hidden" name="_csrf" value="<?= $csrfToken ?>"> <!-- csrf token check -->
 			<input type="hidden" name="id" value=<?php echo $row['id']; ?>> <!-- id from selected product -->
             <p> Please fill in the following details and transfer <b>Rp.<?php echo $row['price']; ?></b> to the BCA account no: <b>12345678910</b>. </p>
             <div class="form-group">
