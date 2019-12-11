@@ -6,10 +6,10 @@ include "../database/db.php";
 
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    $id = $_POST["id"];
-    $type = $_POST["type"];
-    $breed = $_POST["breed"];
-    $price = $_POST["price"];
+    $id = htmlspecialchars($_POST["id"]);
+    $type = htmlspecialchars($_POST["type"]);
+    $breed = htmlspecialchars($_POST["breed"]);
+    $price = htmlspecialchars($_POST["price"]);
 
     $image = $_FILES["image"];
     $image_name = $image["name"];

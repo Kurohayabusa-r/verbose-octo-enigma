@@ -6,13 +6,17 @@ include "../database/db.php";
 
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    $username = $_POST["txtUsername"];
+    $username = htmlspecialchars($_POST["txtUsername"]);
     $password = $_POST["txtPassword"];
     $confirmPassword = $_POST["txtConfirmPassword"];
 
     if($username == "")
     {
         $_SESSION["error"] = "Username must be filled";
+    }
+    else if(!preg_match('/[a-zA-Z]+[a-zA-Z0-9]+$/', $username))
+    {
+        $_SESSION["error"] = "Username must only consist of alphabets and numbers";
     }
     else if($password == "")
     {

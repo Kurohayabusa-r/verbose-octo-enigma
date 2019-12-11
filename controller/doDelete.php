@@ -2,7 +2,7 @@
 
 include "../database/db.php";
 
-$id = $_GET['id'];
+$id = htmlspecialchars($_GET['id']);
 
 $stmt = $conn->prepare("DELETE FROM pets WHERE id = ?");
 $stmt->bind_param("i", $id);

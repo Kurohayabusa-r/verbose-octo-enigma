@@ -6,10 +6,10 @@ include "../database/db.php";
 
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    $id = $_POST["id"];
-    $name = $_POST["name"];
-    $nohp = $_POST["nohp"];
-    $address = $_POST["address"];
+    $id = htmlspecialchars($_POST["id"]);
+    $name = htmlspecialchars($_POST["name"]);
+    $nohp = htmlspecialchars($_POST["nohp"]);
+    $address = htmlspecialchars($_POST["address"]);
 
     $image = $_FILES["image"];
     $image_name = $image["name"];
@@ -44,7 +44,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         $_SESSION["error"] = "Address must be filled";
     }
 
-    if(!preg_match('/^[a-zA-Z0-9-. ]+$/', $address))
+    if(!preg_match('/[a-zA-Z0-9-. ]+$/', $address))
     {
         $_SESSION["error"] = "Please enter a valid address";
     }
