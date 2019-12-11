@@ -20,10 +20,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
     $fileType = ["image/png","image/jpg","image/jpeg"];
 
-    if(strlen($nama) < 2 || strlen($nama) > 25)
+    if(strlen($name) < 2 || strlen($name) > 25)
     {
         $_SESSION["error"] = "Name length must be 2 to 25 characters";
     }
+
+    if (ctype_alpha(str_replace(' ', '', $name)) === false) {
+        $_SESSION["error"] = 'Name must contain letters and spaces only';
+      }
 
     if(!is_numeric($nohp))
     {
@@ -38,6 +42,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     if($address == "")
     {
         $_SESSION["error"] = "Address must be filled";
+    }
+
+    if(!preg_match('/^[a-zA-Z0-9-. ]+$/', $address))
+    {
+        $_SESSION["error"] = "Please enter a valid address";
     }
 
     if($image_size > 2000000)
@@ -60,7 +69,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         if( !isset($_SESSION["error"]) )
         {
             $stmt = $conn->prepare("INSERT INTO transactions(nama,nohp,address,bukti) VALUES(?,?,?,?)");
-            $stmt->bind_param("sssb", $type, $breed, $price, $image_temp);
+            $stmt->bind_param("sssb", $name, $nohp, $address, $image_temp);
             //$stmt->execute();
             //$query = "INSERT INTO handphone(type,brand,price,image) VALUES('$type','$brand','$price','$image_name')";
             //$res = $conn->query($query);
